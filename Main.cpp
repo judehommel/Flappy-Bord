@@ -9,6 +9,7 @@ double pipeX1 = 1200.f;
 double pipeY1 = random <int> (250, 650);
 double pipeX2 = 1800.f;
 double pipeY2 = random <int> (250, 650);
+double pipeAccel = 5.f;
 double bordY = 200.f;
 
 void bord(sf::RenderWindow &window)
@@ -30,7 +31,7 @@ void pipe1(sf::RenderWindow &window)
     pipeTop.setPosition(pipeX1, pipeY1-1000);
     pipeBottom.setFillColor(sf::Color(100, 200, 70));
     pipeTop.setFillColor(sf::Color(100, 200, 70));
-    pipeX1-=5.f;
+    pipeX1-=pipeAccel;
     window.draw(pipeTop);
     window.draw(pipeBottom);
 }
@@ -45,7 +46,7 @@ void pipe2(sf::RenderWindow &window)
     pipeTop.setPosition(pipeX2, pipeY2-1000);
     pipeBottom.setFillColor(sf::Color(100, 200, 70));
     pipeTop.setFillColor(sf::Color(100, 200, 70));
-    pipeX2-=5.f;
+    pipeX2-=pipeAccel;
     window.draw(pipeTop);
     window.draw(pipeBottom);
 }
@@ -124,6 +125,7 @@ int main()
             s = to_string(score);
             cout<<s;
             scoreTimer = 10;
+            pipeAccel+=0.5f;
         }
         else if(pipeX2 < 50.f && pipeX2 > 40.f && scoreTimer < 1)
         {
@@ -131,6 +133,7 @@ int main()
             s = to_string(score);
             cout<<s;
             scoreTimer = 10;
+            pipeAccel+=0.5f;
         }
         else
         {
@@ -169,8 +172,8 @@ int main()
 
         //Death Checks
         bordIsDead = (bordY > 700) ? true : bordIsDead;
-        bordIsDead = (pipeX1 < 100.f && bordY < pipeY1-210 || pipeX1 < 100.f && bordY > pipeY1) ? true : bordIsDead;
-        bordIsDead = (pipeX2 < 100.f && bordY < pipeY2-210 || pipeX1 < 100.f && bordY > pipeY2) ? true : bordIsDead;
+        bordIsDead = (pipeX1 < 100.f && pipeX1 > 0.f && bordY < pipeY1-210 || pipeX1 < 100.f && pipeX1 > 0.f && bordY > pipeY1) ? true : bordIsDead;
+        bordIsDead = (pipeX2 < 100.f && pipeX2 > 0.f && bordY < pipeY2-210 || pipeX2 < 100.f && pipeX2 > 0.f && bordY > pipeY2) ? true : bordIsDead;
         if(bordIsDead)
         {
             window.clear(sf::Color(50, 50, 50));
