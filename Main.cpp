@@ -70,7 +70,7 @@ int main()
     arial.loadFromFile("arial.ttf");
     if (!arial.loadFromFile("arial.ttf"))
     {
-        cout<<"error";
+        cout<<"Error: could not find arial.ttf";
     }
 
     // create the window
@@ -90,6 +90,12 @@ int main()
             if (event.type == sf::Event::Closed || sf::Keyboard::isKeyPressed(sf::Keyboard::Escape))
                 window.close();
         }
+
+        // get the current mouse position in the window
+        sf::Vector2i pixelPos = sf::Mouse::getPosition(window);
+
+        // convert it to world coordinates
+        sf::Vector2f worldPos = window.mapPixelToCoords(pixelPos);
 
         // Background
         window.clear(sf::Color(150, 160, 230));
@@ -203,7 +209,7 @@ int main()
             respawnButton.setOutlineThickness(10);
             respawnButton.setSize(sf::Vector2f(230.f, 100.f));
             respawnButton.setPosition(470.f, 480.f);
-            if(sf::Mouse::getPosition().x < 1490 && sf::Mouse::getPosition().x > 1240 && sf::Mouse::getPosition().y < 1200 && sf::Mouse::getPosition().y > 1090)
+            if(worldPos.x < 700 && worldPos.x > 450 && worldPos.y < 590 && worldPos.y > 475)
             {
                 respawnButton.setFillColor(sf::Color(130, 130, 130));
                 if(sf::Mouse::isButtonPressed(sf::Mouse::Left))
